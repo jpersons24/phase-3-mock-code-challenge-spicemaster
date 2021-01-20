@@ -11,30 +11,32 @@ const detailCard = document.querySelector('#spice-blend-detail')
 function initialize() { 
    fetch('http://localhost:3000/spiceblends')
       .then(response => response.json())
-      .then(getAllSpiceBlends)
+      .then(allSpiceBlends => {
+         allSpiceBlends.forEach(singleObj => renderSpiceBlend(singleObj))
+      })
 }
 
 initialize()
 
 // ****************** RENDERING functions ***************
 
-function renderAllSpiceBlends(singleObj) {
-   // console.log(singleObj)
-   const detailContainer = document.createElement('div')
-   detailContainer.classList.add('all-spice-blends')
-   
-   detailContainer.innerHTML += 
-      `<div id="spice-blend-detail" data-id='${singleObj.id}'>
-         <img class="detail-image" src="${singleObj.image}" alt="${singleObj.title}" />
-         <h2 class="title">${singleObj.title}</h2>
+function renderSpiceBlend(singleObj) {
+   const spiceBlendContainer = document.createElement('div')
+   spiceBlendContainer.classList.add('spice-container')
+   const spiceBlendDetail = document.querySelector('#spice-blend-detail')
+   spiceBlendContainer.append(spiceBlendDetail)
+   spiceBlendContainer.innerHTML +=
+   `<div id="spice-blend-detail" data-id='${singleObj.id}'>
+      <img class="detail-image" src="${singleObj.image}" alt="${singleObj.title}" />
+      <h2 class="title">${singleObj.title}</h2>
 
-         <div class="ingredients-container">
+      <div class="ingredients-container">
          <h4>Ingredients:</h4>
          <ul class="ingredients-list">
             <!-- Add Spice Blend Ingredients Here -->
          </ul>
-         </div>
-      </div>`
+      </div>
+   </div>`
 }
 
 
